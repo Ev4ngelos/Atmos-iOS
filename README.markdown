@@ -7,11 +7,18 @@ Features
   - Collects pressure, acceleration, magnetic field sensor measurements
   - Collects user observations about current weather conditions in terms of current temperature, current weather phenomena and current wind intensity
   - Collects user predictions about future weather conditions in terms of future temperature, future weather phenomena and future wind intensity
+  - Performs reverse geolocation 
   - Provides user generated information about weather current and future weather conditions in places of interest
+  - Uses HTTP POST method for data transfer in JSON format
 
 Documentation
 ---------------
 All data collected is anonymous and publicly available via the Atmos API.
+
+Libraries
+---------------
+- EDSunrise: https://github.com/mikereedell/sunrisesunsetlib-java
+- Alamofire: https://github.com/Alamofire/Alamofire
 
     
 License
