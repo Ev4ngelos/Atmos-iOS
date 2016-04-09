@@ -4,12 +4,12 @@ The Atmos iOS app is an open source project for crowdsourcing weather data on iO
 
 Features
 ---------------
-  - Collects pressure, acceleration, magnetic field sensor measurements
-  - Collects user observations about current weather conditions in terms of current temperature, current weather phenomena and current wind intensity
-  - Collects user predictions about future weather conditions in terms of future temperature, future weather phenomena and future wind intensity
-  - Performs reverse geolocation 
-  - Provides user generated information about weather current and future weather conditions in places of interest
-  - Uses HTTP POST method for data transfer in JSON format
+  - Collects pressure, acceleration, magnetic field sensor measurements.
+  - Collects user observations about current weather conditions in terms of current temperature, current weather phenomena and current wind intensity.
+  - Collects user predictions about future weather conditions in terms of future temperature, future weather phenomena and future wind intensity.
+  - Performs reverse geolocation.
+  - Provides user generated information about weather current and future weather conditions in places of interest.
+  - Uses HTTP POST method for data transfer in JSON format.
 
 Documentation
 ---------------
@@ -31,4 +31,4 @@ This application has been developed within the [MYGEOSS](http://digitalearthlab.
     
 License
 ---------------
-[EUPL (European Union Public License)](https://en.wikipedia.org/wiki/European_Union_Public_Licence)
+[EUPL (European Union Public License)](https://en.wikipedia.org/wiki/European_Union_Public_Licence).
