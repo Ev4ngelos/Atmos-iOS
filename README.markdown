@@ -20,6 +20,9 @@ Libraries
 - EDSunrise: https://github.com/mikereedell/sunrisesunsetlib-java
 - Alamofire: https://github.com/Alamofire/Alamofire
 
+Acknowledgements
+---------------
+This application has been developed within the MYGEOSS project, which has received funding from the European Union's Horizon 2020 research and innovation programme. The JRC, or as the case may be the European Commission, shall not be held liable for any direct or indirect, incidental, consequential or other damages, including but not limited to the loss of data, loss of profits, or any other financial loss arising from the use of this application, or inability to use it, even if the JRC is notified of the possibility of such damages.
     
 License
 ---------------
@@ -29,3 +32,4 @@ EUPL (European Union Public License) https://en.wikipedia.org/wiki/European_Unio
   [1.0]: https://github.com/erndev/EDSunriseSet/tree/1.0
   [myweather.mobi]: http://myweather.mobi
   [Atmos API]: http://beja.m-iti.org/web/?q=node/10
+[MYGEOSS]: http://digitalearthlab.jrc.ec.europa.eu/mygeoss/call.cfm
