@@ -18,7 +18,7 @@ Reverse geocoding requests are resolved via the [Nominatim](http://wiki.openstre
 
 Libraries
 ---------------
-- [EDSunrise](https://github.com/mikereedell/sunrisesunsetlib-java) for performing local time calculations based on locations.
+- [EDSunrise](https://github.com/mikereedell/sunrisesunsetlib-java) for performing local time calculations based on actual locations.
 - [Alamofire](https://github.com/Alamofire/Alamofire) for optimizing HTTP requests.
 
 Privacy
