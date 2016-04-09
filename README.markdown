@@ -37,4 +37,4 @@ EUPL (European Union Public License) https://en.wikipedia.org/wiki/European_Unio
   [1.0]: https://github.com/erndev/EDSunriseSet/tree/1.0
   [myweather.mobi]: http://myweather.mobi
   [Atmos API]: http://beja.m-iti.org/web/?q=node/10
-  [MYGEOSS]: http://digitalearthlab.jrc.ec.europa.eu/mygeoss/call.cfm
+  [MYGEOSS](http://digitalearthlab.jrc.ec.europa.eu/mygeoss/call.cfm)
