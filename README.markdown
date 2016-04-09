@@ -15,10 +15,15 @@ Documentation
 ---------------
 All data collected is anonymous and publicly available via the Atmos API.
 
+
 Libraries
 ---------------
 - EDSunrise: https://github.com/mikereedell/sunrisesunsetlib-java
 - Alamofire: https://github.com/Alamofire/Alamofire
+
+Privacy
+---------------
+A detailed Privacy Statement is available here.
 
 Acknowledgements
 ---------------
@@ -32,4 +37,4 @@ EUPL (European Union Public License) https://en.wikipedia.org/wiki/European_Unio
   [1.0]: https://github.com/erndev/EDSunriseSet/tree/1.0
   [myweather.mobi]: http://myweather.mobi
   [Atmos API]: http://beja.m-iti.org/web/?q=node/10
-[MYGEOSS]: http://digitalearthlab.jrc.ec.europa.eu/mygeoss/call.cfm
+  [MYGEOSS]: http://digitalearthlab.jrc.ec.europa.eu/mygeoss/call.cfm
