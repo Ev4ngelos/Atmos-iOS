@@ -27,7 +27,11 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         weatherSlider.value = Float(Int(sender.value))//changing movement from continuous to discrete
         NSLog("Weather Slider: \(Int(sender.value))")
         //updateWeatherIcon(Int(sender.value))
-        weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(sender.value)+1), timeframe: "now", position: toolbox.actualPosition))
+        if(locationAvailable()){
+            weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
+        } else {
+            weatherIcon.image = UIImage(named: toolbox.selectWeatherIconWhenNoLocation(String(Int(weatherSlider.value)+1)))
+        }
         NSLog("Slider: \((String(Int(sender.value))))")
     }//weatherSliderControl()
     
@@ -67,7 +71,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         report.getPosition().setServerTimestamp(toolbox.convertTime("Europe/Zurich", date: NSDate())) //converting current timestamp to server timezone timestamp
         report.getPosition().setLocalTimeZone(toolbox.actualPosition.getLocalTimeZone())
         
-       NSLog("--------PREPARING TO UPLOAD REPORT-----------")
+        NSLog("--------PREPARING TO UPLOAD REPORT-----------")
         NSLog("-Address: \(report.getPosition().getAddress())")
         NSLog("-Region: \(report.getPosition().getRegion())")
         NSLog("-Country: \(report.getPosition().getCountry())")
@@ -82,7 +86,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         NSLog("-Weather: \(report.getWeather())")
         NSLog("-Wind: \(report.getWind())")
         NSLog("---------------------------------------------")
-
+        
         toolbox.uploadData(report) { (status) -> () in
             NSLog("Upload status: \(status)")
             //MARK: Respond to User
@@ -102,23 +106,34 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             alert.addButtonWithTitle("OK")
             alert.show()
         }
-       
+        
     }//endSubmitButtonControl()
     
     //MARK: VIEW DID LOAD ()
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog("-->Now Tab loaded")
-       
+        
+        
+        //NSLog("Requesting location authorization...")
         updateWeatherBar()//updates the weather bar icons based on daytime and night-time
-        weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
+        if(locationAvailable()){
+            weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
+        } else {
+            weatherIcon.image = UIImage(named: toolbox.selectWeatherIconWhenNoLocation(String(Int(weatherSlider.value)+1)))
+        }
         _ = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "refreshGUI", userInfo: nil, repeats: true)//this starts a timer for updating GUI
+        
     }//endViewDidLoad()
     
     //MARK: Update GUI loop for implicit GUI updates
     func refreshGUI(){
         updateWeatherBar()//updates the weather bar icons based on daytime and night-time
-        weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
+        if(locationAvailable()){
+            weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
+        } else {
+            weatherIcon.image = UIImage(named: toolbox.selectWeatherIconWhenNoLocation(String(Int(weatherSlider.value)+1)))
+        }
     }//endRefreshGUI()
     
     override func didReceiveMemoryWarning() {
@@ -127,20 +142,64 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     }//endDidReceiveMemoryWarning()
     
     func updateWeatherBar(){
-        if (toolbox.nightTime == false) { //if day load day icons on the bar
+        if(locationAvailable() == true){//if location is available
+            if (toolbox.nightTime == false) { //if day load day icons on the bar
+                barWeatherIcon4.image = UIImage(named:"bar_sun_cloud4")
+                barWeatherIcon5.image = UIImage(named:"bar_sun_cloud3")
+                barWeatherIcon6.image = UIImage(named:"bar_sun_cloud2")
+                barWeatherIcon7.image = UIImage(named:"bar_sun_cloud1")
+                barWeatherIcon8.image = UIImage(named:"bar_sun_clear")
+            } else {
+                barWeatherIcon4.image = UIImage(named:"bar_moon_cloud4")
+                barWeatherIcon5.image = UIImage(named:"bar_moon_cloud3")
+                barWeatherIcon6.image = UIImage(named:"bar_moon_cloud2")
+                barWeatherIcon7.image = UIImage(named:"bar_moon_cloud1")
+                barWeatherIcon8.image = UIImage(named:"bar_moon_clear")
+            }//endElse
+        }else { //if location not available load icons as during daytime
             barWeatherIcon4.image = UIImage(named:"bar_sun_cloud4")
             barWeatherIcon5.image = UIImage(named:"bar_sun_cloud3")
             barWeatherIcon6.image = UIImage(named:"bar_sun_cloud2")
             barWeatherIcon7.image = UIImage(named:"bar_sun_cloud1")
             barWeatherIcon8.image = UIImage(named:"bar_sun_clear")
-        } else {
-            barWeatherIcon4.image = UIImage(named:"bar_moon_cloud4")
-            barWeatherIcon5.image = UIImage(named:"bar_moon_cloud3")
-            barWeatherIcon6.image = UIImage(named:"bar_moon_cloud2")
-            barWeatherIcon7.image = UIImage(named:"bar_moon_cloud1")
-            barWeatherIcon8.image = UIImage(named:"bar_moon_clear")
-        }//endElse
+        }
     }//endWeatherBar
+    
+    func locationAvailable() -> Bool{
+        if(CLLocationManager.locationServicesEnabled() == true){
+            switch (CLLocationManager.authorizationStatus()){
+            case .AuthorizedAlways:
+                NSLog("Location Authorized always")
+                return true
+                
+                
+            case .Denied:
+                NSLog("Location Denied")
+                return false
+                
+                
+            case .NotDetermined:
+                NSLog("Location not detemined")
+                return false
+                
+            case .Restricted:
+                NSLog("Location restricted")
+                return false
+            default:
+                NSLog("Location access allowed as default")
+                return true
+                
+            }//endSwitch()
+            
+        } else {
+            NSLog("Location services off")
+            
+            
+            
+            
+            return false
+        }//endElse
+    }//endLocationAvailable()
     
 }//endNowViewController.swift
 

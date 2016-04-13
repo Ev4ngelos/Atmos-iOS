@@ -37,6 +37,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         location = locations.last
+        
         NSLog("lat: \(location!.coordinate.latitude) lng:  \(location!.coordinate.longitude) alt: \(Int(location!.altitude)) m")
         if (initialized == false){ //if the app hasnt been initialized yet
             actualPosition.setLatitude(String(location!.coordinate.latitude))
@@ -47,20 +48,20 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             actualPosition.setAltitude(String(Int(location!.altitude)))
             actualPosition.setAccuracy(String(location!.horizontalAccuracy))
             actualPosition = locateActualPosition(actualPosition)
-
+            
             measurement.setLocalTimestamp(getLocalTimestamp())
             measurement.setServerTimestamp(convertTime("Europe/Zurich", date: NSDate()))
             initializeAltimeter()
-         // initializeProximity() //deactivated as it doesnt produce numerical values like in Android, it just deactivates the screen.
+            // initializeProximity() //deactivated as it doesnt produce numerical values like in Android, it just deactivates the screen.
             initializeAccelerometer()
             initializeMagnetometer()
             initialized = true
         }//endIf
+        
     }//endLocationManager()
-  
+    
     func initializeLocationManager(){
         self.locationManager.requestAlwaysAuthorization()
-        //self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
         self.locationManager.startUpdatingLocation()
@@ -87,7 +88,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         dateFormatter.timeZone = NSTimeZone(name:position.getLocalTimeZone())
         let strSunrise = dateFormatter.stringFromDate(sunriseTime!)
         position.setSunriseTime(strSunrise)
-    //    NSLog("++Calculated surnise: \(strSunrise) for \(position.getRegion()) with timezone: \(position.getTimeZone()) lat: \(position.getLatitude()) lng: \(position.getLongitude()))")
+        //    NSLog("++Calculated surnise: \(strSunrise) for \(position.getRegion()) with timezone: \(position.getTimeZone()) lat: \(position.getLatitude()) lng: \(position.getLongitude()))")
         return position
     }//endCalculateSunrise()
     
@@ -110,7 +111,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         dateFormatter.timeZone = NSTimeZone(name:position.getLocalTimeZone())
         let strSunset = dateFormatter.stringFromDate(sunsetTime!)
         position.setSunsetTime(strSunset)
-    //    NSLog("++Calculated sunset: \(strSunset) for \(position.getRegion()) with timezone: \(position.getTimeZone()) lat: \(position.getLatitude()) lng: \(position.getLongitude()))")
+        //    NSLog("++Calculated sunset: \(strSunset) for \(position.getRegion()) with timezone: \(position.getTimeZone()) lat: \(position.getLatitude()) lng: \(position.getLongitude()))")
         return position
     }
     
@@ -122,27 +123,27 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         let remoteSunset = dateFormatter.dateFromString(position.getSunsetTime())!
         let nowStr = convertTime(position.getLocalTimeZone(), date: NSDate())
         var now = dateFormatter.dateFromString(nowStr)!
-      //  NSLog("-->Checking time \(nowStr) in \(position.getRegion()) with sunrise \(remoteSunrise) and sunset \(remoteSunset)")
+        //  NSLog("-->Checking time \(nowStr) in \(position.getRegion()) with sunrise \(remoteSunrise) and sunset \(remoteSunset)")
         now = NSCalendar.currentCalendar().dateByAddingUnit(NSCalendarUnit.Hour, value: offsetHour, toDate: now, options: NSCalendarOptions.init(rawValue: 0))!
         //XOR boolean operator is "!=" from what in Java would be "|"
         if ((now.compare(remoteSunrise) == NSComparisonResult.OrderedAscending) != (now.compare(remoteSunset) == NSComparisonResult.OrderedDescending)) {
             if(offsetHour == 0){
-           //     NSLog("Now \(now) is night in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
+                //     NSLog("Now \(now) is night in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
                 nightTime = true
                 return true
             }else {
                 //NSLog("In \(offsetHour)h will be night")
-            //    NSLog("At \(now) will be night in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
+                //    NSLog("At \(now) will be night in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
                 nightTimeIn3h = true
                 return true
             }//endIf
         } else {
             if(offsetHour == 0){
-            //    NSLog("Now \(now) is day in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
+                //    NSLog("Now \(now) is day in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
                 nightTime = false
                 return false
             } else {
-           //     NSLog("At \(now) will be day in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
+                //     NSLog("At \(now) will be day in \(position.getRegion()) with Sunrise: \(position.getSunriseNSDate()) and Sunset: \(position.getSunsetNSDate())")
                 nightTimeIn3h = false
                 return false
             }//endEndIf
@@ -160,28 +161,28 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     func convertTime(targetTimezone: String, date: NSDate) -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    //    let strOriginal = dateFormatter.stringFromDate(date)
+        //    let strOriginal = dateFormatter.stringFromDate(date)
         dateFormatter.timeZone = NSTimeZone(name:targetTimezone)
         let strConverted = dateFormatter.stringFromDate(date)
-      //  NSLog("Converted FROM: \(strOriginal), \(dateFormatter.timeZone.name) TO: \(strConverted), \(dateFormatter.timeZone.name) ")
+        //  NSLog("Converted FROM: \(strOriginal), \(dateFormatter.timeZone.name) TO: \(strConverted), \(dateFormatter.timeZone.name) ")
         return strConverted
     }
     
     func getIdentifierForVendor() -> String {
         return UIDevice.currentDevice().identifierForVendor!.UUIDString
     }
-   
+    
     func getDeviceName() -> String {
         return String(UIDevice.currentDevice().type)
     }
-
+    
     func getAppVersion() -> String {
         let nsObject: AnyObject? = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] //Current app version
         let nsObjectString = nsObject as! String
         //  NSLog("Atmos version: \(nsObjectString)")
         return nsObjectString
     }
-
+    
     func getIOSVersion() -> String {
         return UIDevice.currentDevice().systemName + " " + UIDevice.currentDevice().systemVersion
     }
@@ -193,9 +194,9 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         let kerr: kern_return_t = withUnsafeMutablePointer(&info) {
             
             task_info(mach_task_self_,
-                task_flavor_t(TASK_BASIC_INFO),
-                task_info_t($0),
-                &count)
+                      task_flavor_t(TASK_BASIC_INFO),
+                      task_info_t($0),
+                      &count)
         }
         
         if kerr == KERN_SUCCESS {
@@ -253,7 +254,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             }//endIf
             
         }//endDoRequest2()
-
+        
     }//endGetAvaialblePlaces()
     
     func getCrowdReports(places:[Place], completionHandler: (crowdReports: Array<Place>) ->()){
@@ -318,7 +319,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                         }
                         
                         if(place.getPosition().getLatitude() != "default" && place.getPosition().getLongitude() != "default"){
-                           // let location = CLLocation.init(latitude: Double(place.getPosition().getLatitude())!, longitude: Double(place.getPosition().getLongitude())!)
+                            // let location = CLLocation.init(latitude: Double(place.getPosition().getLatitude())!, longitude: Double(place.getPosition().getLongitude())!)
                             crowdReport.setWeatherIcon(UIImage(named: self.selectWeatherIcon(crowdReport.getWeather(), timeframe: "now", position: position))!)
                         }
                         crowdReport.setWind(self.round(subJson["wind_avg"].string!)) //rounding to integer values corresponding to wind icon scale (1-5)
@@ -415,7 +416,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     }//endGerReportsForPlaces2()
     
     func uploadData(dataToUpload: Report, completionHandler: (status: String) -> ()){ //this is for uploading Reports, Predictions and Measurements
-       let uploadUrl = "http://derecho.inf.usi.ch/Atmos/ios/upload_ios.php"
+        let uploadUrl = "http://derecho.inf.usi.ch/Atmos/ios/upload_ios.php"
         var reportFlag = 0
         var predictionFlag = 0
         if (dataToUpload.getType() == "report"){
@@ -442,7 +443,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 "timestamp_location_local" : dataToUpload.getPosition().getLocalTimestamp(),
                 "time_zone" : dataToUpload.getPosition().getLocalTimeZone(),
                 "timestamp_location" : dataToUpload.getPosition().getServerTimestamp(),
-             
+                
                 //MARK: MEASUREMENT FIELDS
                 "device_id" : deviceId,
                 "moisture" : "-999",
@@ -465,7 +466,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 "input_4_report" : "default",
                 "timestamp_report_local" : dataToUpload.getPosition().getLocalTimestamp(),
                 "timestamp_report" : dataToUpload.getPosition().getServerTimestamp(),
-
+                
                 //MARK: PREDICTION FIELDS
                 "prediction" : predictionFlag, // flag indicates prediction if equals 1
                 "input_1_prediction" : dataToUpload.getTemperature(),
@@ -476,7 +477,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 "timestamp_prediction" : dataToUpload.getPosition().getServerTimestamp()
                 ]]
             self.doRequest2(uploadUrl, parameters: dataJSON, completionHandler: { (data) -> () in
-             //   NSLog("Something returned here... \(data[0]["response"])")
+                //   NSLog("Something returned here... \(data[0]["response"])")
                 let response = String(data["response"]).stringByReplacingOccurrencesOfString("\"", withString: "")
                 completionHandler(status: response)
             })
@@ -499,7 +500,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             }//endGuard()
             if let value: AnyObject = response.result.value {
                 let post: JSON = JSON(value)
-               // NSLog("*** POST REQUEST RETURNED: " + post.description) //reactivate for checking fetched JSON
+                // NSLog("*** POST REQUEST RETURNED: " + post.description) //reactivate for checking fetched JSON
                 NSLog("^^Reverse Geolocating place with ID: \(post["osm_id"]), region: \(post["address"]["town"]), country: \(post["address"]["country"])")
                 position.setAddress(post["address"]["suburb"].string!)
                 position.setRegion(post["address"]["town"].string!)
@@ -508,15 +509,15 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 position.setLongitude(lng)
                 position.setLocalTimestamp(self.getLocalTimestamp())
                 position.setServerTimestamp(self.convertTime("Europe/Zurich", date: NSDate()))
-
+                
                 position.setLocalTimeZone(NSTimeZone.localTimeZone().name)
                 position.setSunriseTime(self.calculateSunrise(position).getSunriseTime())
                 position.setSunsetTime(self.calculateSunset(position).getSunsetTime())
-            }//endIf        
+            }//endIf
         }//EndResponseIn()
         return position
     }//endLocateActualPosition()
- 
+    
     func doRequest(url: String, parameters: Array<[String : AnyObject]>) -> JSON {
         var post: JSON = nil
         let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -540,7 +541,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 // handle the results as JSON, without a bunch of nested if loops
                 post = JSON(value)
                 NSLog("*** POST REQUEST RETURNED: " + post.description)
-             // NSLog("The key is: \(post["key"])")
+                // NSLog("The key is: \(post["key"])")
             }//endIf
         }//endAlamofire
         return post
@@ -572,7 +573,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 // handle the results as JSON, without a bunch of nested if loops
                 post = JSON(value)
                 completionHandler(data: post)
-               // NSLog("*** POST REQUEST RETURNED: " + post.description)
+                // NSLog("*** POST REQUEST RETURNED: " + post.description)
                 // NSLog("The key is: \(post["key"])")
             }//endIf
         }//endAlamofire
@@ -598,7 +599,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         return places
     }//endLoadPlaces()
     
-    func selectWeatherIcon (weather: String, timeframe: String, position: Position) -> String { //this returns the appropiate item depending on the weather state and hour of the day
+    func selectWeatherIcon (weather: String, timeframe: String, position: Position!) -> String { //this returns the appropiate item depending on the weather state and hour of the day
         if(timeframe == "now"){
             if(isNight(0, position: position) == false) {
                 switch(Int(weather)!-1) {//selecting adequate weather icon based on input from server by subtracting one to adapt to 0-7 scale
@@ -692,7 +693,38 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 }//endSwitch
             }//endElse
         }//endElse
+        
     }//endSelectWeatherIcon()
+    
+    
+    func selectWeatherIconWhenNoLocation(weather: String)-> String {
+        switch(Int(weather)!-1) {//selecting adequate weather icon based on input from server by subtracting one to adapt to 0-7 scale
+        case 0:
+            return "rain4"
+        case 1:
+            return "rain2"
+        case 2:
+            return "rain1"
+        case 3:
+            return "sun_cloud4"
+        case 4:
+            return "sun_cloud3"
+        case 5:
+            return "sun_cloud2"
+        case 6:
+            return "sun_cloud1"
+        case 7:
+            return "sun_clear"
+        default:
+            NSLog("Wrong number bar \(weather)")
+            return "no_data"
+        }//endSwitch
+        
+        
+        
+    }//endSelectWeatherIconNoLocation
+    
+    
     
     func selectWindIcon(wind: String) -> String { //selecting adequate wind icon based on input from server by subtracting one to adapt to 0-4 scale
         switch(Int(wind)!-1){
@@ -711,6 +743,10 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             return "no_data"
         }//endSwitch
     }//endWind()
+    
+    
+    
+    
     func updateWeatherBar(){ //MARK: This one is for updating the weather bar icons for NOW and LATER panels
         
         
@@ -721,8 +757,8 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     
     func startMeasuring() {
         //access to built-in iPhone temperature sensor not provided
-    
-    
+        
+        
     }
     
     func initializeAltimeter(){
@@ -731,7 +767,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             altimeter.startRelativeAltitudeUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { data, error in
                 if (error == nil) {
                     //print("Relative Altitude: \(data!.relativeAltitude) m")
-                   // print("Pressure: \(data!.pressure) hPa")
+                    // print("Pressure: \(data!.pressure) hPa")
                     self.measurement.setPressure(String(data!.pressure))
                 }//endIf
             })
@@ -767,7 +803,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             motionManager.accelerometerUpdateInterval = 0.2 // 200ms update interval to match the rate for android app (SENSOR_DELAY_NORMAL)
             motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
                 data, error in
-               // NSLog("Acceleration X: \(data?.acceleration.x)")
+                // NSLog("Acceleration X: \(data?.acceleration.x)")
                 //We first estimate gravity's influence
                 gravX = alpha * gravX + (1 - alpha) * (data?.acceleration.x)!
                 gravY = alpha * gravY + (1 - alpha) * (data?.acceleration.y)!
@@ -778,11 +814,11 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 let linearAccelerationZ = (data?.acceleration.z)! - gravZ
                 let overallAcceleration = sqrt(linearAccelerationX*linearAccelerationX + linearAccelerationY*linearAccelerationY + linearAccelerationZ*linearAccelerationZ)
                 self.measurement.setAcceleration(String(overallAcceleration))
-               // NSLog("Overall Acceleration: \(overallAcceleration)")
+                // NSLog("Overall Acceleration: \(overallAcceleration)")
             }//endClosure
         }//endIf
     }//endInitializeAccelerometer()
-
+    
     func initializeMagnetometer(){
         NSLog("--> Initializing magnetometer...")
         if(motionManager.magnetometerAvailable == true){
@@ -790,25 +826,29 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             motionManager.startMagnetometerUpdates()
             motionManager.startMagnetometerUpdatesToQueue(NSOperationQueue.mainQueue()) {
                 data, error in
-              //  NSLog("Magnetic field X: \(data?.magneticField.x)")
+                //  NSLog("Magnetic field X: \(data?.magneticField.x)")
                 //let overallMagneticField = sqrt(data?.magneticField.x*data?.magneticField.x + data?.magneticField.y*data?.magneticField.y + data.magneticField.z*data.magneticField.z)
                 let magneticFieldX = data?.magneticField.x
                 let magneticFieldY = data?.magneticField.y
                 let magneticFieldZ = data?.magneticField.z
                 
                 let overallMagneticField = sqrt(magneticFieldX!*magneticFieldX! + magneticFieldY!*magneticFieldY! + magneticFieldZ!*magneticFieldZ!)
-               // NSLog("Overall Magnetic Field: \(overallMagneticField)")
+                // NSLog("Overall Magnetic Field: \(overallMagneticField)")
                 self.measurement.setMagneticField(String(overallMagneticField))
             }//endClosure
         }//endIf
-    
+        
     }
     func round(number: String) -> String {
-       let result = String(format: "%.0f", Double(number)!)
+        let result = String(format: "%.0f", Double(number)!)
         NSLog("Result: \(result)")
         return result
     }
     
+    func checkLocationAccessAndPermission(){
+        
+        
+    }
 }//endClass
 
 let SharedToolbox = Toolbox()
