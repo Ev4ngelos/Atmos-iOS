@@ -54,59 +54,74 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     @IBOutlet weak var submitButton: UIBarButtonItem!
     
     @IBAction func submitButtonControl(sender: UIBarButtonItem) {
-        let report = Report()
-        report.setType("report")
-        report.setTemperature(String(Int(tempSlider.value - 20))) //getting and normalizing (-20 to +40 C) temperature slider value
-        report.setWeather(String(Int(weatherSlider.value) + 1)) //getting and normalizing (1-8) weather slider value
-        report.setWind(String(Int(windSlider.value) + 1)) //getting and normalizing (1-5) wind slider value
-        
-        report.getPosition().setAddress(toolbox.actualPosition.getAddress())
-        report.getPosition().setRegion(toolbox.actualPosition.getRegion())
-        report.getPosition().setCountry(toolbox.actualPosition.getCountry())
-        report.getPosition().setLatitude(toolbox.actualPosition.getLatitude())
-        report.getPosition().setAltitude(toolbox.actualPosition.getAltitude())
-        report.getPosition().setAccuracy(toolbox.actualPosition.getAccuracy())
-        report.getPosition().setLongitude(toolbox.actualPosition.getLongitude())
-        report.getPosition().setLocalTimestamp(toolbox.getLocalTimestamp())
-        report.getPosition().setServerTimestamp(toolbox.convertTime("Europe/Zurich", date: NSDate())) //converting current timestamp to server timezone timestamp
-        report.getPosition().setLocalTimeZone(toolbox.actualPosition.getLocalTimeZone())
-        
-        NSLog("--------PREPARING TO UPLOAD REPORT-----------")
-        NSLog("-Address: \(report.getPosition().getAddress())")
-        NSLog("-Region: \(report.getPosition().getRegion())")
-        NSLog("-Country: \(report.getPosition().getCountry())")
-        NSLog("-Lat: \(report.getPosition().getLatitude())")
-        NSLog("-Lng: \(report.getPosition().getLongitude())")
-        NSLog("-Local Timestamp: \(report.getPosition().getLocalTimestamp())")
-        NSLog("-Local Time Zone: \(report.getPosition().getLocalTimeZone())")
-        NSLog("-Server Timestamp: \(report.getPosition().getServerTimestamp())")
-        
-        NSLog("-Type: \(report.getType())")
-        NSLog("-Temp: \(report.getTemperature())")
-        NSLog("-Weather: \(report.getWeather())")
-        NSLog("-Wind: \(report.getWind())")
-        NSLog("---------------------------------------------")
-        
-        toolbox.uploadData(report) { (status) -> () in
-            NSLog("Upload status: \(status)")
-            //MARK: Respond to User
-            var title: String
-            var msg: String
-            if(status == "1"){
-                title = "Thank you!"
-                msg = "Your observation has been recorded."
-            } else {
-                title = "We are sorry :("
-                msg = "Weather server is offline. Try again later."
+        if (locationAvailable() == true){
+            let report = Report()
+            report.setType("report")
+            report.setTemperature(String(Int(tempSlider.value - 20))) //getting and normalizing (-20 to +40 C) temperature slider value
+            report.setWeather(String(Int(weatherSlider.value) + 1)) //getting and normalizing (1-8) weather slider value
+            report.setWind(String(Int(windSlider.value) + 1)) //getting and normalizing (1-5) wind slider value
+            
+            report.getPosition().setAddress(toolbox.actualPosition.getAddress())
+            report.getPosition().setRegion(toolbox.actualPosition.getRegion())
+            report.getPosition().setCountry(toolbox.actualPosition.getCountry())
+            report.getPosition().setLatitude(toolbox.actualPosition.getLatitude())
+            report.getPosition().setAltitude(toolbox.actualPosition.getAltitude())
+            report.getPosition().setAccuracy(toolbox.actualPosition.getAccuracy())
+            report.getPosition().setLongitude(toolbox.actualPosition.getLongitude())
+            report.getPosition().setLocalTimestamp(toolbox.getLocalTimestamp())
+            report.getPosition().setServerTimestamp(toolbox.convertTime("Europe/Zurich", date: NSDate())) //converting current timestamp to server timezone timestamp
+            report.getPosition().setLocalTimeZone(toolbox.actualPosition.getLocalTimeZone())
+            
+            NSLog("--------PREPARING TO UPLOAD REPORT-----------")
+            NSLog("-Address: \(report.getPosition().getAddress())")
+            NSLog("-Region: \(report.getPosition().getRegion())")
+            NSLog("-Country: \(report.getPosition().getCountry())")
+            NSLog("-Lat: \(report.getPosition().getLatitude())")
+            NSLog("-Lng: \(report.getPosition().getLongitude())")
+            NSLog("-Local Timestamp: \(report.getPosition().getLocalTimestamp())")
+            NSLog("-Local Time Zone: \(report.getPosition().getLocalTimeZone())")
+            NSLog("-Server Timestamp: \(report.getPosition().getServerTimestamp())")
+            
+            NSLog("-Type: \(report.getType())")
+            NSLog("-Temp: \(report.getTemperature())")
+            NSLog("-Weather: \(report.getWeather())")
+            NSLog("-Wind: \(report.getWind())")
+            NSLog("---------------------------------------------")
+            
+            toolbox.uploadData(report) { (status) -> () in
+                NSLog("Upload status: \(status)")
+                //MARK: Respond to User
+                var title: String
+                var msg: String
+                if(status == "1"){
+                    title = "Thank you!"
+                    msg = "Your observation has been recorded."
+                } else {
+                    title = "We are sorry :("
+                    msg = "Weather server is offline. Try again later."
+                }
+                let alert = UIAlertView()
+                alert.delegate = self
+                alert.title =  title
+                alert.message = msg
+                alert.addButtonWithTitle("OK")
+                alert.show()
             }
-            let alert = UIAlertView()
-            alert.delegate = self
-            alert.title =  title
-            alert.message = msg
-            alert.addButtonWithTitle("OK")
-            alert.show()
-        }
-        
+        } else { //if location is not available inform user
+            let title = "Location Unavailable"
+            let msg = "Atmos needs to know your current location before uploading a weather report. Please enable location services in Settings and make sure Atmos has location permissions granted."
+            let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+                let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                if let url = settingsUrl {
+                    UIApplication.sharedApplication().openURL(url)
+                }//endIf
+            }//endSettingsAction
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            alertController.addAction(settingsAction)
+            alertController.addAction(cancelAction)
+            presentViewController(alertController, animated: true, completion: nil);
+        }//endElse
     }//endSubmitButtonControl()
     
     //MARK: VIEW DID LOAD ()
@@ -171,32 +186,21 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             case .AuthorizedAlways:
                 NSLog("Location Authorized always")
                 return true
-                
-                
             case .Denied:
                 NSLog("Location Denied")
                 return false
-                
-                
             case .NotDetermined:
                 NSLog("Location not detemined")
                 return false
-                
             case .Restricted:
                 NSLog("Location restricted")
                 return false
             default:
                 NSLog("Location access allowed as default")
                 return true
-                
             }//endSwitch()
-            
         } else {
             NSLog("Location services off")
-            
-            
-            
-            
             return false
         }//endElse
     }//endLocationAvailable()
