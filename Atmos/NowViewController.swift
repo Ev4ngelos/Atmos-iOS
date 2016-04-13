@@ -54,7 +54,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     @IBOutlet weak var submitButton: UIBarButtonItem!
     
     @IBAction func submitButtonControl(sender: UIBarButtonItem) {
-        if (toolbox.locationAvailable() == true){
+        if (toolbox.locationAvailable() == true){//if location available
             let report = Report()
             report.setType("report")
             report.setTemperature(String(Int(tempSlider.value - 20))) //getting and normalizing (-20 to +40 C) temperature slider value
