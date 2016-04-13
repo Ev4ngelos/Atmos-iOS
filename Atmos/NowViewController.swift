@@ -27,7 +27,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         weatherSlider.value = Float(Int(sender.value))//changing movement from continuous to discrete
         NSLog("Weather Slider: \(Int(sender.value))")
         //updateWeatherIcon(Int(sender.value))
-        if(locationAvailable()){
+        if(toolbox.locationAvailable()){
             weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
         } else {
             weatherIcon.image = UIImage(named: toolbox.selectWeatherIconWhenNoLocation(String(Int(weatherSlider.value)+1)))
@@ -54,7 +54,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     @IBOutlet weak var submitButton: UIBarButtonItem!
     
     @IBAction func submitButtonControl(sender: UIBarButtonItem) {
-        if (locationAvailable() == true){
+        if (toolbox.locationAvailable() == true){
             let report = Report()
             report.setType("report")
             report.setTemperature(String(Int(tempSlider.value - 20))) //getting and normalizing (-20 to +40 C) temperature slider value
@@ -132,7 +132,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         
         //NSLog("Requesting location authorization...")
         updateWeatherBar()//updates the weather bar icons based on daytime and night-time
-        if(locationAvailable()){
+        if(toolbox.locationAvailable()){
             weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
         } else {
             weatherIcon.image = UIImage(named: toolbox.selectWeatherIconWhenNoLocation(String(Int(weatherSlider.value)+1)))
@@ -144,7 +144,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     //MARK: Update GUI loop for implicit GUI updates
     func refreshGUI(){
         updateWeatherBar()//updates the weather bar icons based on daytime and night-time
-        if(locationAvailable()){
+        if(toolbox.locationAvailable()){
             weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
         } else {
             weatherIcon.image = UIImage(named: toolbox.selectWeatherIconWhenNoLocation(String(Int(weatherSlider.value)+1)))
@@ -157,7 +157,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     }//endDidReceiveMemoryWarning()
     
     func updateWeatherBar(){
-        if(locationAvailable() == true){//if location is available
+        if(toolbox.locationAvailable() == true){//if location is available
             if (toolbox.nightTime == false) { //if day load day icons on the bar
                 barWeatherIcon4.image = UIImage(named:"bar_sun_cloud4")
                 barWeatherIcon5.image = UIImage(named:"bar_sun_cloud3")
@@ -180,30 +180,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         }
     }//endWeatherBar
     
-    func locationAvailable() -> Bool{
-        if(CLLocationManager.locationServicesEnabled() == true){
-            switch (CLLocationManager.authorizationStatus()){
-            case .AuthorizedAlways:
-                NSLog("Location Authorized always")
-                return true
-            case .Denied:
-                NSLog("Location Denied")
-                return false
-            case .NotDetermined:
-                NSLog("Location not detemined")
-                return false
-            case .Restricted:
-                NSLog("Location restricted")
-                return false
-            default:
-                NSLog("Location access allowed as default")
-                return true
-            }//endSwitch()
-        } else {
-            NSLog("Location services off")
-            return false
-        }//endElse
-    }//endLocationAvailable()
+
     
 }//endNowViewController.swift
 

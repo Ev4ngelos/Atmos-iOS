@@ -845,10 +845,30 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         return result
     }
     
-    func checkLocationAccessAndPermission(){
-        
-        
-    }
+    func locationAvailable() -> Bool{
+        if(CLLocationManager.locationServicesEnabled() == true){
+            switch (CLLocationManager.authorizationStatus()){
+            case .AuthorizedAlways:
+                NSLog("Location Authorized always")
+                return true
+            case .Denied:
+                NSLog("Location Denied")
+                return false
+            case .NotDetermined:
+                NSLog("Location not detemined")
+                return false
+            case .Restricted:
+                NSLog("Location restricted")
+                return false
+            default:
+                NSLog("Location access allowed as default")
+                return true
+            }//endSwitch()
+        } else {
+            NSLog("Location services off")
+            return false
+        }//endElse
+    }//endLocationAvailable()
 }//endClass
 
 let SharedToolbox = Toolbox()
