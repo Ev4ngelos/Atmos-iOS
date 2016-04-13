@@ -32,6 +32,8 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     
     override init () {
         super.init()
+        actualPosition.setLatitude("46.0110928799154")
+        actualPosition.setLongitude("8.95758408145778")
         initializeLocationManager()
     }//endInit()
     
@@ -61,6 +63,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     }//endLocationManager()
     
     func initializeLocationManager(){
+        NSLog("-->Initializing location manager")
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
@@ -846,22 +849,24 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     }
     
     func locationAvailable() -> Bool{
-        if(CLLocationManager.locationServicesEnabled() == true){
+        // NSLog("Location manager initialized: \(initialized)")
+        if(CLLocationManager.locationServicesEnabled() == true && initialized == true){
             switch (CLLocationManager.authorizationStatus()){
             case .AuthorizedAlways:
-                NSLog("Location Authorized always")
+                //  NSLog("Location Authorized always")
                 return true
             case .Denied:
                 NSLog("Location Denied")
+                // initialized = false
                 return false
             case .NotDetermined:
-                NSLog("Location not detemined")
+                //  NSLog("Location not detemined")
                 return false
             case .Restricted:
-                NSLog("Location restricted")
+                //  NSLog("Location restricted")
                 return false
             default:
-                NSLog("Location access allowed as default")
+                //   NSLog("Location access allowed as default")
                 return true
             }//endSwitch()
         } else {

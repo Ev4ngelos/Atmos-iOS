@@ -141,6 +141,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
         
     }//endViewDidLoad()
     
+    
     //MARK: Update GUI loop for implicit GUI updates
     func refreshGUI(){
         updateWeatherBar()//updates the weather bar icons based on daytime and night-time

@@ -29,11 +29,6 @@
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Atmos requires location services for collecting accurate weather data</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>location</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
