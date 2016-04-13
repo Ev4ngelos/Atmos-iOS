@@ -109,12 +109,10 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog("-->Now Tab loaded")
-       // tempSlider.minimumTrackTintColor = UIColor.redColor() //setting bar color to red
+       
         updateWeatherBar()//updates the weather bar icons based on daytime and night-time
         weatherIcon.image=UIImage(named: toolbox.selectWeatherIcon(String(Int(weatherSlider.value)+1), timeframe: "now", position: toolbox.actualPosition))
-        //updateWeatherIcon(Int(weatherSlider.value))
-        
-        //_ = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "refreshGUI", userInfo: nil, repeats: true)//this starts a timer for updating GUI
+        _ = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "refreshGUI", userInfo: nil, repeats: true)//this starts a timer for updating GUI
     }//endViewDidLoad()
     
     //MARK: Update GUI loop for implicit GUI updates

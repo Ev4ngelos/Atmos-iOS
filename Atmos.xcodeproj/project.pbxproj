@@ -13,6 +13,7 @@
 		E88158E61C47DEAC00DAB086 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E88158D61C47DE8300DAB086 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E881B1C81C3F07B600367FD3 /* Toolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E881B1C71C3F07B600367FD3 /* Toolbox.swift */; };
 		E881B1CE1C3F21AC00367FD3 /* EDSunriseSet.m in Sources */ = {isa = PBXBuildFile; fileRef = E881B1CD1C3F21AC00367FD3 /* EDSunriseSet.m */; };
+		E88291111CBE92690026C022 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E88291101CBE92690026C022 /* Assets.xcassets */; };
 		E893B81A1C37D831005D8262 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E893B8191C37D831005D8262 /* AppDelegate.swift */; };
 		E893B81E1C37D831005D8262 /* NowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E893B81D1C37D831005D8262 /* NowViewController.swift */; };
 		E893B8211C37D831005D8262 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E893B81F1C37D831005D8262 /* Main.storyboard */; };
@@ -31,7 +32,6 @@
 		E8C9A6721C382EDC00980578 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C9A6711C382EDC00980578 /* PlacesViewController.swift */; };
 		E8DE7A481C48FCB5005C0D3B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E88B38A51C48FC5800B795FB /* SwiftyJSON.framework */; };
 		E8DE7A491C48FCB5005C0D3B /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E88B38A51C48FC5800B795FB /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E8F792701C3B048400E613EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8F7926F1C3B048400E613EE /* Assets.xcassets */; };
 		E8FD8BF91C468D3D00381E37 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FD8BF81C468D3D00381E37 /* Model.swift */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +202,7 @@
 		E881B1CB1C3F21AB00367FD3 /* Atmos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Atmos-Bridging-Header.h"; sourceTree = "<group>"; };
 		E881B1CC1C3F21AC00367FD3 /* EDSunriseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSunriseSet.h; sourceTree = "<group>"; };
 		E881B1CD1C3F21AC00367FD3 /* EDSunriseSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDSunriseSet.m; sourceTree = "<group>"; };
+		E88291101CBE92690026C022 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E88B389A1C48FC5800B795FB /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = "../SwiftyJSON-master/SwiftyJSON.xcodeproj"; sourceTree = "<group>"; };
 		E893B8161C37D831005D8262 /* Atmos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Atmos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E893B8191C37D831005D8262 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -225,7 +226,6 @@
 		E8C9A6671C381A2500980578 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		E8C9A66F1C3823B300980578 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		E8C9A6711C382EDC00980578 /* PlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
-		E8F7926F1C3B048400E613EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8FD8BF81C468D3D00381E37 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -314,7 +314,7 @@
 		E893B8181C37D831005D8262 /* Atmos */ = {
 			isa = PBXGroup;
 			children = (
-				E8F7926F1C3B048400E613EE /* Assets.xcassets */,
+				E88291101CBE92690026C022 /* Assets.xcassets */,
 				E893B8191C37D831005D8262 /* AppDelegate.swift */,
 				E893B8491C37E9B8005D8262 /* LaterViewController.swift */,
 				E893B81D1C37D831005D8262 /* NowViewController.swift */,
@@ -592,7 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E893B8261C37D831005D8262 /* LaunchScreen.storyboard in Resources */,
-				E8F792701C3B048400E613EE /* Assets.xcassets in Resources */,
+				E88291111CBE92690026C022 /* Assets.xcassets in Resources */,
 				E893B8211C37D831005D8262 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
