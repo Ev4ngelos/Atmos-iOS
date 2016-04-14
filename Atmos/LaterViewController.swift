@@ -53,7 +53,7 @@ class LaterViewController: UIViewController {
     @IBOutlet weak var submitButton: UIBarButtonItem!
     
     @IBAction func submitButtonControl(sender: UIBarButtonItem) {
-        if (toolbox.locationAvailable() == true) {
+        if (toolbox.locationAvailable() == true && toolbox.isConnectedToNetwork() == true) {
             let prediction = Report()
             prediction.setType("prediction")
             prediction.setTemperature(String(Int(tempSlider.value - 20))) //getting and normalizing (-20 to +40 C) temperature slider value
@@ -106,7 +106,8 @@ class LaterViewController: UIViewController {
                 alert.addButtonWithTitle("OK")
                 alert.show()
             }//endToolboxUploadData()
-        } else {
+        }
+        if (toolbox.locationAvailable() == false) {
             let title = "Location Unavailable"
             let msg = "Atmos needs to know your current location before uploading a weather prediction. Please enable location services in Settings and make sure Atmos has location permissions granted."
             let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
@@ -120,8 +121,17 @@ class LaterViewController: UIViewController {
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
             presentViewController(alertController, animated: true, completion: nil);
-        }//endElse
+        }//endIfLocationAvailable()
         
+        if (toolbox.isConnectedToNetwork() == false) {
+            NSLog("-->No Internet connection")
+            let title = "Internet Connection Unavailable"
+            let msg = "An Internet connection is required for submitting a weather prediction. Please connect to the Internet and try again."
+            let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil);
+        }//endif
     }//submitButtonControl()
     override func viewDidLoad() {
         super.viewDidLoad()

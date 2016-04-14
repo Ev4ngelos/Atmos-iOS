@@ -16,6 +16,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var spinner = UIActivityIndicatorView()
     var noPlacesText = UITextView()
     
+    
     struct variables { //MARK: put in here variables you wish to be accessible by the inner class
         static var varOne: Int = 1
         static var places = [Place]()
@@ -29,39 +30,49 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var addPlaceBarButton: UIBarButtonItem!
     @IBAction func addPlaceBarButton(sender: UIBarButtonItem) {
-        //!!!ATTENTION HERE!!!: Consider limiting text input to only alphabetical characters for preventing MySQL injection attempts
-        //Also deactivate copy paste
-        let screen = UIScreen.mainScreen().bounds
-        let screenWidth = screen.size.width
-        //let screenHeight = screen.size.height
-        let xpos = (screenWidth - 300)/2
-        
-        variables.searchPlacesTextField = UITextField(frame: CGRectMake(xpos, 100, 300, 40))
-        variables.searchPlacesTextField.placeholder = "Type a place to search..."
-        variables.searchPlacesTextField.font = UIFont.systemFontOfSize(15)
-        variables.searchPlacesTextField.borderStyle = UITextBorderStyle.RoundedRect
-        variables.searchPlacesTextField.autocorrectionType = UITextAutocorrectionType.No
-        variables.searchPlacesTextField.keyboardType = UIKeyboardType.Default
-        variables.searchPlacesTextField.returnKeyType = UIReturnKeyType.Done
-        variables.searchPlacesTextField.clearButtonMode = UITextFieldViewMode.WhileEditing;
-        variables.searchPlacesTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
-        variables.searchPlacesTextField.delegate = self
-        dimBackground()
-        self.view.addSubview(variables.searchPlacesTextField)
-        variables.searchPlacesTextField.becomeFirstResponder()
-        variables.searchingForNewPlaces = true
+        if(variables.toolbox.isConnectedToNetwork()){
+            //!!!ATTENTION HERE!!!: Consider limiting text input to only alphabetical characters for preventing MySQL injection attempts
+            //Also deactivate copy paste
+            let screen = UIScreen.mainScreen().bounds
+            let screenWidth = screen.size.width
+            //let screenHeight = screen.size.height
+            let xpos = (screenWidth - 300)/2
+            
+            variables.searchPlacesTextField = UITextField(frame: CGRectMake(xpos, 100, 300, 40))
+            variables.searchPlacesTextField.placeholder = "Type a place to search..."
+            variables.searchPlacesTextField.font = UIFont.systemFontOfSize(15)
+            variables.searchPlacesTextField.borderStyle = UITextBorderStyle.RoundedRect
+            variables.searchPlacesTextField.autocorrectionType = UITextAutocorrectionType.No
+            variables.searchPlacesTextField.keyboardType = UIKeyboardType.Default
+            variables.searchPlacesTextField.returnKeyType = UIReturnKeyType.Done
+            variables.searchPlacesTextField.clearButtonMode = UITextFieldViewMode.WhileEditing;
+            variables.searchPlacesTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+            variables.searchPlacesTextField.delegate = self
+            dimBackground()
+            self.view.addSubview(variables.searchPlacesTextField)
+            variables.searchPlacesTextField.becomeFirstResponder()
+            variables.searchingForNewPlaces = true
+        } else {
+            NSLog("-->No Internet connection")
+            let title = "Internet Connection Unavailable"
+            let msg = "An Internet connection is required for adding new places. Please connect to the Internet and try again."
+            let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil);
+        }//endElse
     }//endAddPlaceButton()
     
-   
+    
     @IBOutlet weak var testBarButton: UIBarButtonItem!
     //TEST BUTTON PRESS HERE FOR TESTING FUNCTIONS
     @IBAction func testBarButtonPress(sender: UIBarButtonItem) { //LAST UPDATE 27 Jan 17:22: Everything works fine. Make sure you put the following segments in a timer that updates places periodically also make sure you call save data afterwards. Then, call the updateWeather function also on start and also when a new place is added in the table. Then, have a look at the Now and Later tabs and see if you can use functions added in Toolbox for painting the UI based on night/day and slider selections - (fixed)
         
         
-      //  NSLog("Test Button pressed")
-      //  let url = NSURL(string: "http://beja.m-iti.org/web/?q=node/11")!
-      //  UIApplication.sharedApplication().openURL(url)
-
+        //  NSLog("Test Button pressed")
+        //  let url = NSURL(string: "http://beja.m-iti.org/web/?q=node/11")!
+        //  UIApplication.sharedApplication().openURL(url)
+        
     }//endTestButtonPress()
     
     func showNoPlacesTextView() {
@@ -72,7 +83,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let ypos = (screenHeight - 300)/2
         noPlacesText = UITextView(frame: CGRectMake(xpos, ypos, 300, 40))
         noPlacesText.font = UIFont.systemFontOfSize(25)
-       // noPlacesText.backgroundColor
+        // noPlacesText.backgroundColor
         noPlacesText.text = "Testing..."
         self.view.addSubview(noPlacesText)
     }
@@ -98,7 +109,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK: VIEW DID LOAD <------------------------------>
     override  func viewDidLoad() {
         super.viewDidLoad()
-       // variables.toolbox.savePlaces(variables.places)//this is
+        // variables.toolbox.savePlaces(variables.places)//this is
         placesTableView.delegate = self
         placesTableView.dataSource = self
         NSLog("-->Places Tab loaded")
@@ -107,9 +118,9 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if savedPlaces?.isEmpty == false  {
             variables.places += savedPlaces! as [Place]
         } else {
-           loadSamplePlaces()
+            loadSamplePlaces()
         }
-       
+        
         NSLog(" places length: " + String(variables.places.count))
         
         // let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -123,16 +134,27 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         variables.toolbox.initializeLocationManager()
         
         _ = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: "refreshGUI", userInfo: nil, repeats: true)//this starts a timer for updating GUI
+        
         _ = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: "getCrowdWeatherUpdates", userInfo: nil, repeats: true)//this starts a timer for updating crowd weather periodically
+        
         getCrowdWeatherUpdates() //Requesting Crowd Weather Updates
         
+        if(variables.toolbox.isConnectedToNetwork() == false) { //notifying user once that Interent is not available
+            NSLog("-->No Internet connection")
+            let title = "Internet Connection Unavailable"
+            let msg = "An Internet connection is required for retrieving crowd weather updates. Please connect to the Internet."
+            let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil);
+        }//endIF
     }//endViewDidLoad()
     
     //MARK: Update GUI loop for implicit GUI updates
     func refreshGUI(){
         //MARK: Here we perfom GUI refreshing related actions
         if placesTableView.editing == false { //Only update table when user is not editing it
-           placesTableView.reloadData() //Activate again after debugg
+            placesTableView.reloadData() //Activate again after debugg
         } else {
             // addPlaceBarButton.enabled = false
         }
@@ -141,7 +163,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             getCrowdWeatherUpdates()
             variables.newPlaceAdded  = false //take down flag after update request has been filed
         }
-
+        
         //MARK: When should the ADD (+) button be available?
         //When user is not editing the PlacestableView
         //When user is not searching for a new place
@@ -168,44 +190,46 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }//endUpdate()
     func checkDaylight(){
-             
+        
     }//endCheckDaylight
     
     func getCrowdWeatherUpdates() {//Here you send requests for weather updates for the places you have in the tableView and you handle the reception of the actual updates
-        //MARK: Get CrowdReports Available for added places
-        variables.toolbox.getCrowdReports(variables.places) { (crowdReports) -> () in
-            if crowdReports.count > 0 {
-                for var i = 0; i < variables.places.count; i++ {
-                    for cReport in crowdReports {
-                        if (variables.places[i].getName() == cReport.getName() && variables.places[i].getCountry() == cReport.getCountry()) {
-                            variables.places[i].setCrowdReport(cReport.getCrowdReport()) //loading Crowd Report
-                            variables.places[i].setPosition(cReport.getPosition()) //loading position
-                            NSLog("***Crowd Report for \(variables.places[i].getName()) with id \(variables.places[i].getCrowdReport().getId()) fetched")
-                        } else {
-                            // variables.places[i].getCrowdReport().setPool("No data")
-                        }//endIf
+        if(variables.toolbox.isConnectedToNetwork()==true){ //if Internet connection available
+            //MARK: Get CrowdReports Available for added places
+            variables.toolbox.getCrowdReports(variables.places) { (crowdReports) -> () in
+                if crowdReports.count > 0 {
+                    for var i = 0; i < variables.places.count; i++ {
+                        for cReport in crowdReports {
+                            if (variables.places[i].getName() == cReport.getName() && variables.places[i].getCountry() == cReport.getCountry()) {
+                                variables.places[i].setCrowdReport(cReport.getCrowdReport()) //loading Crowd Report
+                                variables.places[i].setPosition(cReport.getPosition()) //loading position
+                                NSLog("***Crowd Report for \(variables.places[i].getName()) with id \(variables.places[i].getCrowdReport().getId()) fetched")
+                            } else {
+                                // variables.places[i].getCrowdReport().setPool("No data")
+                            }//endIf
+                        }//endFor
                     }//endFor
-                }//endFor
-            }//endIf
-            variables.toolbox.savePlaces(variables.places)//saving CrowdReports
-        }//endClosure
-        //MARK: Get CrowdPredictions Available for added places
-        variables.toolbox.getCrowdPredictions(variables.places) { (crowdPredictions) -> () in
-            if crowdPredictions.count > 0 {
-                for var i = 0; i < variables.places.count; i++ {
-                    for cPrediction in crowdPredictions {
-                        if (variables.places[i].getName() == cPrediction.getName() && variables.places[i].getCountry() == cPrediction.getCountry()) {
-                            variables.places[i].setCrowdPrediction(cPrediction.getCrowdPrediction())
-                            NSLog("***Crowd Prediction for \(variables.places[i].getName()) with id \(variables.places[i].getCrowdPrediction().getId()) fetched")
-                        } else {
-                            // variables.places[i].getCrowdReport().setPool("No data")
-                        }//endIf
+                }//endIf
+                variables.toolbox.savePlaces(variables.places)//saving CrowdReports
+            }//endClosure
+            //MARK: Get CrowdPredictions Available for added places
+            variables.toolbox.getCrowdPredictions(variables.places) { (crowdPredictions) -> () in
+                if crowdPredictions.count > 0 {
+                    for var i = 0; i < variables.places.count; i++ {
+                        for cPrediction in crowdPredictions {
+                            if (variables.places[i].getName() == cPrediction.getName() && variables.places[i].getCountry() == cPrediction.getCountry()) {
+                                variables.places[i].setCrowdPrediction(cPrediction.getCrowdPrediction())
+                                NSLog("***Crowd Prediction for \(variables.places[i].getName()) with id \(variables.places[i].getCrowdPrediction().getId()) fetched")
+                            } else {
+                                // variables.places[i].getCrowdReport().setPool("No data")
+                            }//endIf
+                        }//endFor
                     }//endFor
-                }//endFor
-            }//endIf
-            NSLog("Size of CrowdPredictions: \(crowdPredictions.count)")
-            variables.toolbox.savePlaces(variables.places)//saving CrowdPredictions
-        }//endClosure
+                }//endIf
+                NSLog("Size of CrowdPredictions: \(crowdPredictions.count)")
+                variables.toolbox.savePlaces(variables.places)//saving CrowdPredictions
+            }//endClosure
+        }//endIfInternetCheck
     }//endGetWeatheUpdates()
     
     override  func didReceiveMemoryWarning() {
@@ -265,7 +289,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         placesTableView.setEditing(editing, animated: true)        // Toggles the actual editing actions appearing on a table view
         NSLog("Editing table: \(editing)")
     }//endSetEditing()
-
+    
     func loadSamplePlaces(){
         NSLog("--> In loadSamplePlaces()")
         let weatherIcon1 = UIImage(named: "sun_clear")
@@ -290,7 +314,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         creport2.setWeatherIcon(weatherIcon2!)
         creport2.setPool("81")
         place2.setCrowdReport(creport2)
-
+        
         //  let place3=Place(name:"Valsamata", countryName: "Greece", temperature: 7.2, crowdNumber: 2, weatherIcon: weatherIcon3)
         let weatherIcon3 = UIImage(named: "sun_cloud2")
         let creport3 = CrowdReport()
@@ -301,7 +325,7 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         creport3.setWeatherIcon(weatherIcon3!)
         creport3.setPool("1")
         place3.setCrowdReport(creport3)
-
+        
         variables.places += [place1, place2, place3]
     }//endLoadSamplePlaces()
     

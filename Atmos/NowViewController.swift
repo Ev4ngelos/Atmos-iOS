@@ -133,9 +133,6 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             alertController.addAction(okAction)
             presentViewController(alertController, animated: true, completion: nil);
         }//endif
-
-        
-        
     }//endSubmitButtonControl()
     
     //MARK: VIEW DID LOAD ()
