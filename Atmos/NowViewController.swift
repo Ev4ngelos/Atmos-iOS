@@ -54,7 +54,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
     @IBOutlet weak var submitButton: UIBarButtonItem!
     
     @IBAction func submitButtonControl(sender: UIBarButtonItem) {
-        if (toolbox.locationAvailable() == true){//if location available
+        if (toolbox.locationAvailable() == true && toolbox.isConnectedToNetwork() == true){//if location and Internet connection available 
             let report = Report()
             report.setType("report")
             report.setTemperature(String(Int(tempSlider.value - 20))) //getting and normalizing (-20 to +40 C) temperature slider value
@@ -107,7 +107,8 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
                 alert.addButtonWithTitle("OK")
                 alert.show()
             }
-        } else { //if location is not available inform user
+        }
+        if (toolbox.locationAvailable() == false) { //if location is not available inform user
             let title = "Location Unavailable"
             let msg = "Atmos needs to know your current location before uploading a weather report. Please enable location services in Settings and make sure Atmos has location permissions granted."
             let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
@@ -121,7 +122,20 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
             presentViewController(alertController, animated: true, completion: nil);
-        }//endElse
+        }//endif
+        
+        if (toolbox.isConnectedToNetwork() == false) {
+            NSLog("-->No Internet connection")
+            let title = "Internet Connection Unavailable"
+            let msg = "An Internet connection is required for submitting a weather report. Please connect to the Internet and try again."
+            let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil);
+        }//endif
+
+        
+        
     }//endSubmitButtonControl()
     
     //MARK: VIEW DID LOAD ()
