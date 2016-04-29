@@ -133,6 +133,7 @@ class LaterViewController: UIViewController {
             presentViewController(alertController, animated: true, completion: nil);
         }//endif
     }//submitButtonControl()
+    //MARK: VIEW DID LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog("-->Later Tab loaded")
@@ -162,7 +163,7 @@ class LaterViewController: UIViewController {
     //MARK: update GUI functions
     func updateWeatherBar(){
         if(toolbox.locationAvailable() == true){//if location is available
-            if (toolbox.nightTime == false) { //if day load day icons on the bar
+            if (toolbox.nightTimeIn3h == false) { //if day load day icons on the bar
                 barWeatherIcon4.image = UIImage(named:"bar_sun_cloud4")
                 barWeatherIcon5.image = UIImage(named:"bar_sun_cloud3")
                 barWeatherIcon6.image = UIImage(named:"bar_sun_cloud2")
