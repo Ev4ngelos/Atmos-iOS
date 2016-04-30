@@ -63,14 +63,14 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     }//endLocationManager()
     
     func initializeLocationManager(){
-    //    if(self.hasLocationPermissions() == true){
-            NSLog("-->Initializing location manager")
-            self.locationManager.requestAlwaysAuthorization()
-            self.locationManager.delegate = self
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
-            self.locationManager.startUpdatingLocation()
-            locationUpdatesActive = true
-      //  }//endIf
+        //    if(self.hasLocationPermissions() == true){
+        NSLog("-->Initializing location manager")
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
+        self.locationManager.startUpdatingLocation()
+        locationUpdatesActive = true
+        //  }//endIf
     }//endInitializeLocationManager()
     
     
@@ -496,43 +496,49 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         let lat: String! = String(location!.coordinate.latitude)
         let lng: String! = String(location!.coordinate.longitude)
         NSLog("Reverse Geolocating for --> Lat: \(lat) and Lng: \(lng)")
-        Alamofire.request(.GET, "http://nominatim.openstreetmap.org/reverse?format=json&lat=\(lat)&lon=\(lng)&zoom=18&addressdetails=1").responseJSON {response in
-            guard response.result.error == nil else {
-                // got an error in getting the data, need to handle it
-                print("error calling GET on /posts/1")
-                print(response.result.error!)
-                return
-            }//endGuard()
-            if let value: AnyObject = response.result.value {
-                var post: JSON = JSON(value)
-                // NSLog("*** POST REQUEST RETURNED: " + post.description) //reactivate for checking fetched JSON
-                NSLog("^^Reverse Geolocating place with ID: \(post["osm_id"]), address: \(post["address"]["suburb"]), region: \(post["address"]["town"]), country: \(post["address"]["country"])")
-              
-                if(post["address"]["suburb"].isEmpty){ //null checks in case API fails to return a full address
-                    post["address"]["suburb"] = "unknown"
-                }
-                
-                if(post["address"]["town"].isEmpty){
-                    post["address"]["town"] = "unknown"
-                }
-                
-                if(post["address"]["country"].isEmpty){
-                    post["address"]["country"] = "unknown"
-                }
-                
-                position.setAddress(post["address"]["suburb"].string!)
-                position.setRegion(post["address"]["town"].string!)
-                position.setCountry(post["address"]["country"].string!)
-                position.setLatitude(lat)
-                position.setLongitude(lng)
-                position.setLocalTimestamp(self.getLocalTimestamp())
-                position.setServerTimestamp(self.convertTime("Europe/Zurich", date: NSDate()))
-                
-                position.setLocalTimeZone(NSTimeZone.localTimeZone().name)
-                position.setSunriseTime(self.calculateSunrise(position).getSunriseTime())
-                position.setSunsetTime(self.calculateSunset(position).getSunsetTime())
-            }//endIf
-        }//EndResponseIn()
+        if(self.isConnectedToNetwork() == true) {
+            Alamofire.request(.GET, "http://nominatim.openstreetmap.org/reverse?format=json&lat=\(lat)&lon=\(lng)&zoom=18&addressdetails=1").responseJSON {response in
+                guard response.result.error == nil else {
+                    // got an error in getting the data, need to handle it
+                    print("error calling GET on /posts/1")
+                    print(response.result.error!)
+                    return
+                }//endGuard()
+                if let value: AnyObject = response.result.value {
+                    var post: JSON = JSON(value)
+                    // NSLog("*** POST REQUEST RETURNED: " + post.description) //reactivate for checking fetched JSON
+                    NSLog("^^Reverse Geolocating place with ID: \(post["osm_id"]), address: \(post["address"]["suburb"]), region: \(post["address"]["town"]), country: \(post["address"]["country"])")
+                    
+                    if(post["address"]["suburb"].isEmpty){ //null checks in case API fails to return a full address
+                        post["address"]["suburb"] = "unknown"
+                    }
+                    
+                    if(post["address"]["town"].isEmpty){
+                        post["address"]["town"] = "unknown"
+                    }
+                    
+                    if(post["address"]["country"].isEmpty){
+                        post["address"]["country"] = "unknown"
+                    }
+                    
+                    position.setAddress(post["address"]["suburb"].string!)
+                    position.setRegion(post["address"]["town"].string!)
+                    position.setCountry(post["address"]["country"].string!)
+                    position.setLatitude(lat)
+                    position.setLongitude(lng)
+                    position.setLocalTimestamp(self.getLocalTimestamp())
+                    position.setServerTimestamp(self.convertTime("Europe/Zurich", date: NSDate()))
+                    
+                    position.setLocalTimeZone(NSTimeZone.localTimeZone().name)
+                    position.setSunriseTime(self.calculateSunrise(position).getSunriseTime())
+                    position.setSunsetTime(self.calculateSunset(position).getSunsetTime())
+                }//endIf
+            }//EndResponseIn()
+        }
+        else {
+            
+            NSLog("No Internet Connection available!")
+        }
         return position
     }//endLocateActualPosition()
     

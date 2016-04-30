@@ -1672,11 +1672,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Toolbox.swift"
-            timestampString = "483732526.977942"
+            timestampString = "483733750.413676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "668"
-            endingLineNumber = "668"
+            startingLineNumber = "674"
+            endingLineNumber = "674"
             landmarkName = "selectWeatherIcon(_:timeframe:position:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1720,11 +1720,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Toolbox.swift"
-            timestampString = "483732526.977942"
+            timestampString = "483733750.413676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "789"
-            endingLineNumber = "789"
+            startingLineNumber = "795"
+            endingLineNumber = "795"
             landmarkName = "initializeAltimeter()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1736,11 +1736,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Toolbox.swift"
-            timestampString = "483732526.977942"
+            timestampString = "483733750.413676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "862"
-            endingLineNumber = "862"
+            startingLineNumber = "868"
+            endingLineNumber = "868"
             landmarkName = "round(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1752,11 +1752,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Toolbox.swift"
-            timestampString = "483732526.977942"
+            timestampString = "483733750.413676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "813"
-            endingLineNumber = "813"
+            startingLineNumber = "819"
+            endingLineNumber = "819"
             landmarkName = "initializeAccelerometer()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1768,11 +1768,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Toolbox.swift"
-            timestampString = "483732526.977942"
+            timestampString = "483733750.413676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "853"
-            endingLineNumber = "853"
+            startingLineNumber = "859"
+            endingLineNumber = "859"
             landmarkName = "initializeMagnetometer()"
             landmarkType = "5">
          </BreakpointContent>
