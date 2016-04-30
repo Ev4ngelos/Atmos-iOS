@@ -137,6 +137,8 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         _ = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: "getCrowdWeatherUpdates", userInfo: nil, repeats: true)//this starts a timer for updating crowd weather periodically
         
+        _ = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "reverseGeolocateCurrentLocation", userInfo: nil, repeats: true)//
+        
         getCrowdWeatherUpdates() //Requesting Crowd Weather Updates
         
         if(variables.toolbox.isConnectedToNetwork() == false) { //notifying user once that Interent is not available
@@ -232,6 +234,13 @@ class PlacesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }//endIfInternetCheck
     }//endGetWeatheUpdates()
     
+    func reverseGeolocateCurrentLocation(){
+        if(variables.toolbox.locationAvailable() == true) {
+            variables.toolbox.actualPosition = variables.toolbox.locateActualPosition(variables.toolbox.actualPosition)
+        } else {
+            NSLog("--Can't reverse geolocate because location services are turned off or permissions are revoked")
+        }
+    }//endReverseGeolocateCurrentLocation()
     override  func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
