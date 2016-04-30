@@ -63,14 +63,12 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     }//endLocationManager()
     
     func initializeLocationManager(){
-        //    if(self.hasLocationPermissions() == true){
         NSLog("-->Initializing location manager")
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
         self.locationManager.startUpdatingLocation()
         locationUpdatesActive = true
-        //  }//endIf
     }//endInitializeLocationManager()
     
     
@@ -767,23 +765,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
             return "no_data"
         }//endSwitch
     }//endWind()
-    
-    
-    
-    
-    func updateWeatherBar(){ //MARK: This one is for updating the weather bar icons for NOW and LATER panels
-        
-        
-        
-    }//endUpdateWeatherBar()
-    
-    //MARK: Contextual Measuring Components
-    
-    func startMeasuring() {
-        //access to built-in iPhone temperature sensor not provided
-        
-        
-    }
+
     
     func initializeAltimeter(){
         if CMAltimeter.isRelativeAltitudeAvailable() {
