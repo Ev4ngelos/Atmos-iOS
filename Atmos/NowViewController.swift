@@ -109,6 +109,8 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             }
         }
         if (toolbox.locationAvailable() == false) { //if location is not available inform user
+           // showEventsAcessDeniedAlert()
+            
             let title = "Location Unavailable"
             let msg = "Atmos needs to know your current location before uploading a weather report. Please enable location services in Settings and make sure Atmos has location permissions granted."
             let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
@@ -122,6 +124,7 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
             presentViewController(alertController, animated: true, completion: nil);
+            
         }//endif
         
         if (toolbox.isConnectedToNetwork() == false) {
@@ -191,8 +194,27 @@ class NowViewController: UIViewController, CLLocationManagerDelegate {//this cla
             barWeatherIcon8.image = UIImage(named:"bar_sun_clear")
         }
     }//endWeatherBar
+    //this is extra - consider removing it.
+    func showEventsAcessDeniedAlert() {
+        let alertController = UIAlertController(title: "Sad Face Emoji!",
+                                                message: "The calendar permission was not authorized. Please enable it in Settings to continue.",
+                                                preferredStyle: .Alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (alertAction) in
+            
+            // THIS IS WHERE THE MAGIC HAPPENS!!!!
+            if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.sharedApplication().openURL(appSettings)
+            }
+        }
+        alertController.addAction(settingsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
     
-
     
 }//endNowViewController.swift
 

@@ -63,12 +63,14 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
     }//endLocationManager()
     
     func initializeLocationManager(){
-        NSLog("-->Initializing location manager")
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
-        self.locationManager.startUpdatingLocation()
-        locationUpdatesActive = true
+    //    if(self.hasLocationPermissions() == true){
+            NSLog("-->Initializing location manager")
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest //change to kCLLocationAccuracyHundredMeters to conserve battery resources
+            self.locationManager.startUpdatingLocation()
+            locationUpdatesActive = true
+      //  }//endIf
     }//endInitializeLocationManager()
     
     
@@ -502,9 +504,22 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
                 return
             }//endGuard()
             if let value: AnyObject = response.result.value {
-                let post: JSON = JSON(value)
+                var post: JSON = JSON(value)
                 // NSLog("*** POST REQUEST RETURNED: " + post.description) //reactivate for checking fetched JSON
-                NSLog("^^Reverse Geolocating place with ID: \(post["osm_id"]), region: \(post["address"]["town"]), country: \(post["address"]["country"])")
+                NSLog("^^Reverse Geolocating place with ID: \(post["osm_id"]), address: \(post["address"]["suburb"]), region: \(post["address"]["town"]), country: \(post["address"]["country"])")
+              
+                if(post["address"]["suburb"].isEmpty){ //null checks in case API fails to return a full address
+                    post["address"]["suburb"] = "unknown"
+                }
+                
+                if(post["address"]["town"].isEmpty){
+                    post["address"]["town"] = "unknown"
+                }
+                
+                if(post["address"]["country"].isEmpty){
+                    post["address"]["country"] = "unknown"
+                }
+                
                 position.setAddress(post["address"]["suburb"].string!)
                 position.setRegion(post["address"]["town"].string!)
                 position.setCountry(post["address"]["country"].string!)
@@ -846,9 +861,30 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         let result = String(format: "%.0f", Double(number)!)
         NSLog("Result: \(result)")
         return result
-    }
+    }//endRound()
     
-    func locationAvailable() -> Bool{
+    func hasLocationPermissions() -> Bool {//this function simply returns true/false if the app has/doesnt have location permission access
+        switch (CLLocationManager.authorizationStatus()){
+        case .AuthorizedAlways:
+            //  NSLog("Location Authorized always")
+            return true
+        case .Denied:
+            NSLog("Location Denied")
+            // initialized = false
+            return false
+        case .NotDetermined:
+            //  NSLog("Location not detemined")
+            return false
+        case .Restricted:
+            //  NSLog("Location restricted")
+            return false
+        default:
+            //   NSLog("Location access allowed as default")
+            return true
+        }//endSwitch()
+    }//endHasLocationPermissions()
+    
+    func locationAvailable() -> Bool{//this function returns true/false when the app has/doesnt have receive at least a location update
         // NSLog("Location manager initialized: \(initialized)")
         if(CLLocationManager.locationServicesEnabled() == true && initialized == true){
             switch (CLLocationManager.authorizationStatus()){
@@ -889,7 +925,7 @@ class Toolbox: NSObject, CLLocationManagerDelegate {
         let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
         return (isReachable && !needsConnection)
     }//endIsConnectedToNetwork()
-
+    
 }//endClass
 
 
