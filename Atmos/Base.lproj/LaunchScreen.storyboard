@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -42,33 +42,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EU" translatesAutoresizingMaskIntoConstraints="NO" id="0qS-1F-nM7">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fkJ-Pq-sOp">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="qXf-Vq-GRT"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Atmos iOS v1.0">
-                                        <attributes>
-                                            <font key="NSFont" size="18" name="HelveticaNeue-Medium"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="qXf-Vq-GRT"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <mask key="constraints">
-                                        <include reference="qXf-Vq-GRT"/>
-                                    </mask>
-                                </variation>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -82,7 +55,6 @@
                             <constraint firstItem="fVI-Ix-z6Z" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="216" id="L3R-0z-uea">
                                 <variation key="widthClass=compact" constant="152"/>
                             </constraint>
-                            <constraint firstItem="fkJ-Pq-sOp" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="91" id="Rxe-jv-6PS"/>
                             <constraint firstItem="fVI-Ix-z6Z" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Y9Q-pd-3K9">
                                 <variation key="widthClass=compact" constant="-53.5"/>
                             </constraint>
@@ -92,7 +64,6 @@
                             <constraint firstItem="yHm-5J-gCX" firstAttribute="top" secondItem="fVI-Ix-z6Z" secondAttribute="bottom" constant="80" id="acG-9H-yr8">
                                 <variation key="widthClass=compact" constant="165"/>
                             </constraint>
-                            <constraint firstItem="fkJ-Pq-sOp" firstAttribute="centerX" secondItem="fVI-Ix-z6Z" secondAttribute="centerX" id="i0M-5q-RRU"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="0qS-1F-nM7" secondAttribute="bottom" constant="8" symbolic="YES" id="kW4-8f-5BL"/>
                             <constraint firstItem="yHm-5J-gCX" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="38" id="pOo-Xv-mDQ">
                                 <variation key="widthClass=compact" constant="66"/>
@@ -103,32 +74,25 @@
                             <constraint firstItem="0qS-1F-nM7" firstAttribute="leading" secondItem="yHm-5J-gCX" secondAttribute="trailing" constant="8" symbolic="YES" id="yOP-v0-6is">
                                 <variation key="widthClass=compact" constant="8"/>
                             </constraint>
-                            <constraint firstItem="fkJ-Pq-sOp" firstAttribute="top" secondItem="fVI-Ix-z6Z" secondAttribute="bottom" constant="3" id="yap-zP-EaW">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="fVI-Ix-z6Z"/>
                                 <exclude reference="yHm-5J-gCX"/>
                                 <exclude reference="0qS-1F-nM7"/>
-                                <exclude reference="fkJ-Pq-sOp"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="JDZ-bj-31z"/>
+                                <exclude reference="kW4-8f-5BL"/>
+                                <exclude reference="w40-TA-Tz6"/>
+                                <exclude reference="yOP-v0-6is"/>
                                 <exclude reference="FZr-eA-ArN"/>
                                 <exclude reference="L3R-0z-uea"/>
                                 <exclude reference="Y9Q-pd-3K9"/>
                                 <exclude reference="Yoy-5b-E9A"/>
-                                <exclude reference="Rxe-jv-6PS"/>
-                                <exclude reference="i0M-5q-RRU"/>
-                                <exclude reference="yap-zP-EaW"/>
                                 <exclude reference="JCD-4H-y3F"/>
                                 <exclude reference="acG-9H-yr8"/>
                                 <exclude reference="pOo-Xv-mDQ"/>
-                                <exclude reference="w40-TA-Tz6"/>
-                                <exclude reference="yOP-v0-6is"/>
-                                <exclude reference="JDZ-bj-31z"/>
-                                <exclude reference="kW4-8f-5BL"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -136,23 +100,19 @@
                                 <include reference="fVI-Ix-z6Z"/>
                                 <include reference="yHm-5J-gCX"/>
                                 <include reference="0qS-1F-nM7"/>
-                                <include reference="fkJ-Pq-sOp"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="JDZ-bj-31z"/>
+                                <include reference="kW4-8f-5BL"/>
+                                <include reference="w40-TA-Tz6"/>
+                                <include reference="yOP-v0-6is"/>
                                 <include reference="FZr-eA-ArN"/>
                                 <include reference="L3R-0z-uea"/>
                                 <include reference="Y9Q-pd-3K9"/>
                                 <include reference="Yoy-5b-E9A"/>
-                                <include reference="Rxe-jv-6PS"/>
-                                <include reference="i0M-5q-RRU"/>
-                                <include reference="yap-zP-EaW"/>
                                 <include reference="JCD-4H-y3F"/>
                                 <include reference="acG-9H-yr8"/>
                                 <include reference="pOo-Xv-mDQ"/>
-                                <include reference="w40-TA-Tz6"/>
-                                <include reference="yOP-v0-6is"/>
-                                <include reference="JDZ-bj-31z"/>
-                                <include reference="kW4-8f-5BL"/>
                             </mask>
                         </variation>
                     </view>
