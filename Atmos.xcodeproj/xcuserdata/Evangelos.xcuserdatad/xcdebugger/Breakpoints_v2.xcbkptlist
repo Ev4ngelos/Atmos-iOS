@@ -2248,12 +2248,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.997523"
+                  timestampString = "488149780.967559"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "48">
+                  offsetFromSymbolStart = "35">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2263,12 +2263,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.997632"
+                  timestampString = "488149780.967663"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "64">
+                  offsetFromSymbolStart = "57">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2278,12 +2278,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.997708"
+                  timestampString = "488149780.967748"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "24">
+                  offsetFromSymbolStart = "19">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2311,12 +2311,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.998619"
+                  timestampString = "488149780.968522"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "40">
+                  offsetFromSymbolStart = "27">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2326,12 +2326,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.99871"
+                  timestampString = "488149780.968618"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "52">
+                  offsetFromSymbolStart = "42">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2341,12 +2341,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.99879"
+                  timestampString = "488149780.968701"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "152">
+                  offsetFromSymbolStart = "159">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2356,12 +2356,12 @@
                   moduleName = "Atmos"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Evangelos/Development/xCodeWorkspace/Atmos/Atmos/NowViewController.swift"
-                  timestampString = "483641590.998869"
+                  timestampString = "488149780.968782"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "16"
                   endingLineNumber = "16"
-                  offsetFromSymbolStart = "92">
+                  offsetFromSymbolStart = "93">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -109,7 +109,7 @@ class LaterViewController: UIViewController {
         }
         if (toolbox.locationAvailable() == false) {
             let title = "Location Unavailable"
-            let msg = "Atmos needs to know your current location before uploading a weather prediction. Please enable location services in Settings and make sure Atmos has location permissions granted."
+            let msg = "iAtmos needs to know your current location before uploading a weather prediction. Please enable location services in Settings and make sure Atmos has location permissions granted."
             let alertController = UIAlertController (title: title, message: msg, preferredStyle: .Alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
                 let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
