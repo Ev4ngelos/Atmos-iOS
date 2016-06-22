@@ -1113,7 +1113,7 @@
                                                                     </mask>
                                                                 </variation>
                                                             </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a6y-RA-3PL">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6y-RA-3PL">
                                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <string key="text">Hint: Enter your personal prediction about how you think weather conditions at your location will be in the short-term future (e.g. 3 hours from now) in temperature (°C), weather phenomena and wind intensity. Press the submit button when you are done.</string>
@@ -2131,7 +2131,7 @@
                                                                     </mask>
                                                                 </variation>
                                                             </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bVC-Np-qMe">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVC-Np-qMe">
                                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <string key="text">Hint: Enter your personal observation about current weather conditions at your location in temperature (°C), weather phenomena and wind intensity. Press the submit button when you are done.</string>
